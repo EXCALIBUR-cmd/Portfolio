@@ -1,3 +1,4 @@
+
 export type Project = {
   id: string;
   title: string;
@@ -57,6 +58,7 @@ export type Skill = {
 };
 
 import { Code, Database, DraftingCompass, Smartphone, Palette, BarChartBig, SearchCode } from 'lucide-react';
+import type React from 'react';
 
 // Placeholder for GSAP icon
 const GSAPIcon = () => (
