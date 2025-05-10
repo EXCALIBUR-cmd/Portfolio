@@ -17,31 +17,35 @@ export function AboutSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 70%',
+          toggleActions: 'play none none none',
+        }
+      });
+
       if (headingRef.current) {
-        gsap.fromTo(headingRef.current,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-            scrollTrigger: { trigger: headingRef.current, start: 'top 80%', toggleActions: 'play none none none' }
-          }
+        tl.fromTo(headingRef.current,
+          { opacity: 0, y: 80, rotationX: -30 },
+          { opacity: 1, y: 0, rotationX: 0, duration: 1, ease: 'power4.out' }
         );
       }
+
       if (imageRef.current) {
-        gsap.fromTo(imageRef.current,
-          { opacity: 0, x: -100, scale: 0.8 },
-          {
-            opacity: 1, x: 0, scale: 1, duration: 1, ease: 'power3.out',
-            scrollTrigger: { trigger: imageRef.current, start: 'top 80%', end: 'bottom 20%', scrub: 1 }
-          }
+        tl.fromTo(imageRef.current,
+          { opacity: 0, x: -150, scale: 0.7, rotationZ: -10 },
+          { opacity: 1, x: 0, scale: 1, rotationZ: 0, duration: 1.5, ease: 'expo.out' },
+          "-=0.6" // Overlap with heading animation
         );
       }
+
       if (textContentRef.current) {
-        gsap.fromTo(textContentRef.current,
-          { opacity: 0, x: 100 },
-          {
-            opacity: 1, x: 0, duration: 1, ease: 'power3.out',
-            scrollTrigger: { trigger: textContentRef.current, start: 'top 80%', toggleActions: 'play none none none' }
-          }
+        const paragraphs = gsap.utils.toArray(textContentRef.current.children);
+        tl.fromTo(paragraphs,
+          { opacity: 0, y: 50, skewX: 5 },
+          { opacity: 1, y: 0, skewX: 0, stagger: 0.25, duration: 1, ease: 'power3.out' },
+          "-=1.2" // Overlap significantly
         );
       }
     }, sectionRef);
@@ -57,17 +61,17 @@ export function AboutSection() {
         </h2>
         <div className="mt-4 h-1.5 w-24 bg-accent mx-auto rounded-full"></div>
       </div>
-      <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
-        <div ref={imageRef} className="relative aspect-square max-w-md mx-auto w-full">
+      <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+        <div ref={imageRef} className="relative aspect-[4/5] max-w-md mx-auto w-full group">
           <Card className="overflow-hidden shadow-2xl rounded-xl h-full">
             <CardContent className="p-0 h-full">
              <Image
-                src="https://picsum.photos/seed/profile/600/600"
+                src="https://picsum.photos/seed/profile2/600/750" // Slightly taller aspect ratio
                 alt="Profile Picture"
-                data-ai-hint="professional portrait"
+                data-ai-hint="modern professional"
                 width={600}
-                height={600}
-                className="object-cover rounded-xl w-full h-full transform transition-transform duration-500 hover:scale-105"
+                height={750}
+                className="object-cover rounded-xl w-full h-full transform transition-transform duration-700 ease-out group-hover:scale-105"
               />
             </CardContent>
           </Card>
