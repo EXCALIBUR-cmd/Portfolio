@@ -16,7 +16,7 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 220 25% 30%;
     --primary: 180 70% 45%; /* Vibrant Teal/Cyan for light theme */
-    --primary-foreground: 0 0% 100%; 
+    --primary-foreground: 0 0% 100%;
     --secondary: 220 20% 92%; /* Lighter cool grey */
     --secondary-foreground: 220 20% 40%;
     --muted: 220 15% 65%;
@@ -108,29 +108,29 @@ body, a, button {
   position: fixed;
   top: 0;
   left: 0;
-  width: 24px; 
+  width: 24px;
   height: 24px;
   border-radius: 50%;
   background-color: hsl(var(--accent) / 0.7); /* Slightly transparent accent color for soft core */
   border: 2px solid hsl(var(--accent)); /* Solid accent border as neon tube */
-  box-shadow: 0 0 6px hsl(var(--accent)), 
-              0 0 12px hsl(var(--accent) / 0.7), 
+  box-shadow: 0 0 6px hsl(var(--accent)),
+              0 0 12px hsl(var(--accent) / 0.7),
               0 0 18px hsl(var(--accent) / 0.4); /* Layered neon glow */
-  pointer-events: none; 
-  z-index: 9999; 
-  transition: transform 0.1s ease-out, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; 
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.1s ease-out, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   transform-origin: center center;
 }
 
 /* Neon border light effect and scaling on hover/active */
 a:hover ~ .custom-cursor,
 button:hover ~ .custom-cursor,
-.hoverable-element:hover ~ .custom-cursor { 
-  transform: scale(1.3); 
+.hoverable-element:hover ~ .custom-cursor {
+  transform: scale(1.3);
   background-color: hsl(var(--accent) / 0.85); /* More intense core on hover */
   border-color: hsl(var(--accent)); /* Keep border bright */
-  box-shadow: 0 0 10px hsl(var(--accent)), 
-              0 0 20px hsl(var(--accent)), 
+  box-shadow: 0 0 10px hsl(var(--accent)),
+              0 0 20px hsl(var(--accent)),
               0 0 30px hsl(var(--accent) / 0.6); /* Enhanced and wider neon glow */
 }
 
@@ -152,4 +152,16 @@ button:hover ~ .custom-cursor,
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--accent));
+}
+
+/* Hero Title Glow Effect */
+.hero-title-glow {
+  /* The base color is set by text-primary in HeroSection.tsx */
+  /* We will use text-shadow for the glow effect based on the accent color */
+  text-shadow:
+    0 0 5px hsl(var(--accent) / 0.8), /* Inner sharp accent glow */
+    0 0 10px hsl(var(--accent) / 0.7), /* Main accent glow */
+    0 0 20px hsl(var(--accent) / 0.5), /* Wider, softer accent glow */
+    0 0 30px hsl(var(--accent) / 0.3), /* Fainter halo */
+    0 0 40px hsl(var(--accent) / 0.2); /* Very faint outer halo */
 }
