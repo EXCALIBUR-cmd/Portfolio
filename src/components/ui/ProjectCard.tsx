@@ -8,8 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Project } from '@/lib/constants';
 import { useEffect, useRef } from 'react';
+import { useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './dialog';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,6 +22,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, index }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const cardElement = cardRef.current;
@@ -66,7 +69,25 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       </CardHeader>
       <CardContent className="p-6 flex-grow">
         <CardTitle className="text-2xl font-semibold mb-3 text-primary group-hover:text-accent transition-colors duration-300">{project.title}</CardTitle>
-        <p className="text-muted-foreground text-sm mb-4 leading-relaxed line-clamp-3">{project.description}</p>
+        <div className="text-muted-foreground text-sm mb-4 leading-relaxed">
+          {/* Truncated description with "Read More" button */}
+          <p className="line-clamp-3">{project.description}</p>
+          
+          {/* Check if description is likely truncated (simple check) */}
+          {project.description.length > 200 && ( // Adjust the length threshold as needed
+            <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+              <DialogTrigger asChild>
+                <Button variant="link" size="sm" className="p-0 h-auto mt-2 text-primary hover:underline">Read More</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>{project.title} Description</DialogTitle>
+                </DialogHeader>
+                <DialogDescription>{project.description}</DialogDescription>
+              </DialogContent>
+            </Dialog>
+          )}
+        </div>
         <div className="flex flex-wrap gap-2 mb-4">
           {project.tags.map((tag) => (
             <Badge key={tag} variant="secondary" className="text-xs bg-primary/10 text-primary border-primary/30">

@@ -6,10 +6,6 @@ body {
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 @layer base {
   :root {
     /* Light Theme (Kept for completeness, but dark theme is primary for "cool/immersive") */
@@ -96,6 +92,37 @@ html {
     @apply bg-background text-foreground;
     @apply antialiased; /* Added from layout for consistency */
   }
+}
+
+/* Custom Cursor Styles */
+body, a, button {
+  cursor: none !important; /* Hide default cursor for specific elements */
+}
+
+/* General body and elements where default cursor should be hidden */
+* {
+  cursor: none;
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: transparent; /* Use transparent background */
+  border: 2px solid hsl(var(--accent) / 0.5); /* Subtle border */
+  pointer-events: none; /* Ignore mouse events on the cursor itself */
+  z-index: 9999; /* Ensure it's on top */
+  transition: transform 0.1s ease-out; /* Smooth movement delay */
+}
+
+/* Border light effect on hover */
+a:hover ~ .custom-cursor,
+button:hover ~ .custom-cursor,
+.hoverable-element:hover ~ .custom-cursor { /* Add a class for other hoverable elements */
+  border-color: hsl(var(--accent)); /* Brighter border on hover */
 }
 
 /* Custom scrollbar for a more modern look */
