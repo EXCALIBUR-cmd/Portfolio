@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useRef } from 'react';
@@ -66,8 +67,8 @@ export function AboutSection() {
           <Card className="overflow-hidden shadow-2xl rounded-xl h-full">
             <CardContent className="p-0 h-full">
              <Image
-                src="https://picsum.photos/seed/profile2/600/750" // Slightly taller aspect ratio
-                alt="Profile Picture"
+                src="https://placehold.co/600x750.png" 
+                alt="Maninder Singh - Profile Picture"
                 data-ai-hint="modern professional"
                 width={600}
                 height={750}
@@ -78,13 +79,13 @@ export function AboutSection() {
         </div>
         <div ref={textContentRef} className="space-y-6 text-lg text-muted-foreground text-left md:text-left">
           <p>
-            Hello! I'm a passionate developer and designer with a knack for creating dynamic and engaging web experiences. My journey in tech has been driven by a love for visual storytelling and innovative problem-solving.
+            Hello! I'm Maninder Singh, a passionate developer with a knack for crafting dynamic and engaging digital experiences. My journey in technology is fueled by a love for innovative problem-solving and bringing creative visions to life.
           </p>
           <p>
-            With a strong foundation in front-end technologies like React and Next.js, I specialize in bringing ideas to life with fluid animations using GSAP. I believe that thoughtful design and seamless interactions are key to captivating users.
+            With a versatile skill set spanning Java, Python, and JavaScript, I specialize in building robust applications and bringing ideas to life with fluid animations using GSAP. I believe that thoughtful design coupled with seamless interactions is key to captivating users.
           </p>
           <p>
-            When I'm not coding, you can find me exploring new design trends, contributing to open-source projects, or hiking in nature to recharge my creative batteries.
+            When I'm not immersed in code, you might find me exploring new tech trends, contributing to exciting projects, or seeking inspiration in the world around me to recharge my creative batteries.
           </p>
         </div>
       </div>
