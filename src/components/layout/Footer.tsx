@@ -13,7 +13,7 @@ export function Footer() {
         </p>
         <div className="flex items-center space-x-4">
           <Link 
-            href="https://github.com" 
+            href="https://github.com/EXCALIBUR-cmd" 
             target="_blank" 
             rel="noopener noreferrer" 
             aria-label="GitHub" 
@@ -22,7 +22,7 @@ export function Footer() {
             <Github className="h-5 w-5" />
           </Link>
           <Link 
-            href="https://linkedin.com" 
+            href="https://www.linkedin.com/in/maninder-singh-00a126288/" 
             target="_blank" 
             rel="noopener noreferrer" 
             aria-label="LinkedIn" 
@@ -31,7 +31,7 @@ export function Footer() {
             <Linkedin className="h-5 w-5" />
           </Link>
           <Link 
-            href="mailto:contact@portfolio.com" 
+            href="mailto:singhmaninder20047@gmail.com" 
             aria-label="Email" 
             className="text-muted-foreground hover:text-accent transition-all duration-300 transform hover:scale-125 hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-accent/50 rounded-full p-1"
           >
