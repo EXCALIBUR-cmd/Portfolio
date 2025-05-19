@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -119,7 +120,7 @@ export function Navbar() {
       <div className="container mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="#home" ref={logoRef} className="flex items-center gap-2 text-xl font-bold text-primary" onClick={() => setActiveHash('#home')}>
           <Code2 className="h-7 w-7 text-accent" />
-          <span>MotionPort</span>
+          <span>Portfolio</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -144,7 +145,7 @@ export function Navbar() {
                    <Link href="#home" className="flex items-center gap-2 text-lg font-bold text-primary" 
                          onClick={() => { setIsMobileMenuOpen(false); setActiveHash('#home'); }}>
                       <Code2 className="h-6 w-6 text-accent" />
-                      <span>MotionPort</span>
+                      <span>Portfolio</span>
                     </Link>
                   <SheetClose asChild>
                      <Button variant="ghost" size="icon">

@@ -1,5 +1,6 @@
+
 /**
- * @fileOverview Hero section component for the MotionPort portfolio.
+ * @fileOverview Hero section component for the Portfolio.
  * Features an animated headline, subtitle, and call-to-action button.
  * Uses GSAP for entry animations.
  */
@@ -17,8 +18,8 @@ export function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaButtonRef = useRef<ElementRef<'a'>>(null); // Changed to ElementRef<'a'> for Link
-  const scrollIndicatorRef = useRef<ElementRef<'a'>>(null); // Changed to ElementRef<'a'> for Link
+  const ctaButtonRef = useRef<HTMLAnchorElement>(null); 
+  const scrollIndicatorRef = useRef<HTMLAnchorElement>(null); 
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -49,7 +50,7 @@ export function HeroSection() {
         "-=0.7" // Overlap with title animation
       );
 
-      // Animate CTA button (targeting the Link component's underlying <a> tag)
+      // Animate CTA button
       tl.fromTo(
         ctaButtonRef.current,
         { opacity: 0, scale: 0.5, y: 30 },
@@ -73,25 +74,31 @@ export function HeroSection() {
     <SectionWrapper id="home" ref={sectionRef} className="bg-gradient-to-br from-background to-secondary/50 text-center overflow-hidden">
       <div className="relative z-10 flex flex-col items-center">
         <h1 ref={titleRef} className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-8 text-primary leading-tight">
-          MotionPort
+          Portfolio
         </h1>
         <p ref={subtitleRef} className="text-xl md:text-2xl text-muted-foreground max-w-2xl mb-12">
           Crafting immersive digital experiences with cutting-edge animations and modern design.
         </p>
-        <Link href="#projects" ref={ctaButtonRef}>
-          <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full px-12 py-7 text-xl shadow-lg transform transition-transform hover:scale-105 active:scale-95">
-            View My Work
-          </Button>
+        <Link href="#projects" passHref legacyBehavior>
+          <a ref={ctaButtonRef}> {/* Anchor tag for GSAP ref */}
+            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-full px-12 py-7 text-xl shadow-lg transform transition-transform hover:scale-105 active:scale-95">
+              View My Work
+            </Button>
+          </a>
         </Link>
       </div>
       <Link 
         href="#about" 
-        ref={scrollIndicatorRef} 
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 text-accent hover:text-accent/80 transition-colors p-2 rounded-full"
-        aria-label="Scroll to About section"
+        passHref 
+        legacyBehavior
       >
-        <ArrowDown className="h-10 w-10" />
-        <span className="sr-only">Scroll to About section</span>
+        <a ref={scrollIndicatorRef} 
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 text-accent hover:text-accent/80 transition-colors p-2 rounded-full"
+          aria-label="Scroll to About section"
+        >
+          <ArrowDown className="h-10 w-10" />
+          <span className="sr-only">Scroll to About section</span>
+        </a>
       </Link>
     </SectionWrapper>
   );
