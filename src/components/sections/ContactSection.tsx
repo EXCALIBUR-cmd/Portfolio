@@ -112,21 +112,21 @@ export function ContactSection() {
             <Mail className="h-6 w-6 text-accent mt-1 shrink-0" />
             <div>
               <h4 className="font-medium text-foreground">Email</h4>
-              <a href="mailto:hello@motionport.dev" className="hover:text-accent transition-colors">hello@motionport.dev</a>
+              <a href="mailto:singhmaninder20047@gmail.com" className="hover:text-accent transition-colors">singhmaninder20047@gmail.com</a>
             </div>
           </div>
            <div className="contact-info-item flex items-start space-x-4 text-muted-foreground">
             <Phone className="h-6 w-6 text-accent mt-1 shrink-0" />
             <div>
               <h4 className="font-medium text-foreground">Phone</h4>
-              <a href="tel:+1234567890" className="hover:text-accent transition-colors">+1 (234) 567-890</a>
+              <a href="tel:+919389962998" className="hover:text-accent transition-colors">+91 9389962998</a>
             </div>
           </div>
           <div className="contact-info-item flex items-start space-x-4 text-muted-foreground">
             <MapPin className="h-6 w-6 text-accent mt-1 shrink-0" />
             <div>
               <h4 className="font-medium text-foreground">Location</h4>
-              <p>Creative City, Webland</p>
+              <p>Dehradun, India</p>
             </div>
           </div>
           <p className="contact-info-item text-sm text-muted-foreground/80 pt-2">

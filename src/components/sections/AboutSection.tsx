@@ -67,7 +67,7 @@ export function AboutSection() {
           <Card className="overflow-hidden shadow-2xl rounded-xl h-full">
             <CardContent className="p-0 h-full">
              <Image
-                src="https://placehold.co/600x750.png" 
+                src="https://media.licdn.com/dms/image/v2/D5603AQETNSFEbJX-QQ/profile-displayphoto-shrink_400_400/B56ZbiEI2bG4Ag-/0/1747549458744?e=1753315200&v=beta&t=VpaWyv5AaT2y2-Ukeiv98KJgd2JN7JAdtXyDtLygVSw" 
                 alt="Maninder Singh - Profile Picture"
                 data-ai-hint="modern professional"
                 width={600}
