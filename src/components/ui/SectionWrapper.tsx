@@ -12,7 +12,7 @@ export function SectionWrapper({ children, className, id, ...props }: SectionWra
     <section
       id={id}
       className={cn(
-        'min-h-screen w-full py-16 md:py-24 lg:py-32 flex flex-col justify-center items-center', // Ensure content is centered
+        'min-h-screen w-full py-12 sm:py-16 md:py-24 lg:py-32 flex flex-col justify-center items-center', // Ensure content is centered
         className
       )}
       {...props}
