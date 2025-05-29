@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            margin: 0;
+        }
+        
+        /* Custom cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            pointer-events: none;
+            mix-blend-mode: difference;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s ease, width 0.3s ease, height 0.3s ease;
+        }
+        
+        .cursor.active {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Hero section animation */
+        .hero-title {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient 5s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Scroll animation classes */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .scroll-animate.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Skill card hover effect */
+        .skill-card {
+            transition: all 0.3s ease;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Project card animation */
+        .project-card {
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: perspective(1000px) rotateY(5deg);
+        }
+        
+        /* Three.js container */
+        #three-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        /* Section divider */
+        .section-divider {
+            height: 100px;
+            width: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.1), transparent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Three.js Container -->
+    <div id="three-container"></div>
+    
+    <!-- Custom cursor -->
+    <div class="cursor"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white bg-opacity-80 backdrop-blur-md shadow-sm">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-blue-500">PORTFOLIO</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link hover:text-blue-500 transition">Home</a>
+                <a href="#about" class="nav-link hover:text-blue-500 transition">About</a>
+                <a href="#skills" class="nav-link hover:text-blue-500 transition">Skills</a>
+                <a href="#projects" class="nav-link hover:text-blue-500 transition">Projects</a>
+                <a href="#contact" class="nav-link hover:text-blue-500 transition">Contact</a>
+            </div>
+            <button class="md:hidden text-blue-500">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-green-50 opacity-50"></div>
+        <div class="max-w-6xl mx-auto px-6 py-20 z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-12 md:mb-0 scroll-animate">
+                    <h1 class="hero-title text-5xl md:text-7xl font-bold mb-6">
+                        Hi, I'm Maninder
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl font-medium text-gray-700 mb-8">
+                        Front-end Developer
+                    </h2>
+                    <p class="text-lg text-gray-600 mb-8 max-w-lg">
+                     I craft smooth, interactive web experiences using React, Framer motion, locomotive and GSAP.
+Blending design with motion, I build interfaces that feel as good as they look.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="px-8 py-3 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 transition transform hover:scale-105">
+                            Contact Me
+                        </a>
+                        <a href="#projects" class="px-8 py-3 border border-blue-500 text-blue-500 rounded-full font-medium hover:bg-blue-50 transition transform hover:scale-105">
+                            View Work
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center scroll-animate">
+                    <div class="w-64 h-64 md:w-80 md:h-80 rounded-2xl bg-gradient-to-br from-blue-500 to-green-400 flex items-center justify-center text-white shadow-2xl">
+                        <div class="text-center p-6">
+                            <i class="fas fa-code text-5xl mb-4"></i>
+                            <h3 class="text-xl font-bold">Scroll to Explore</h3>
+                            <p class="text-sm opacity-80">Watch the background animate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="block w-10 h-16 rounded-full border-2 border-blue-500 flex items-center justify-center">
+                <span class="block w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+            </a>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white bg-opacity-80 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 scroll-animate">
+                <span class="border-b-4 border-blue-500 pb-2">About Me</span>
+            </h2>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/3 mb-10 md:mb-0 flex justify-center scroll-animate">
+                    <div class="w-64 h-64 rounded-full bg-gradient-to-br from-blue-100 to-green-100 border-4 border-white shadow-xl overflow-hidden">
+                        <img src="https://media.licdn.com/dms/image/v2/D5603AQETNSFEbJX-QQ/profile-displayphoto-shrink_800_800/B56ZbiEI2bG4Ac-/0/1747549458744?e=1753920000&v=beta&t=VudBhPYMySsCKclcrpd5E7oNiN_KVtpO1uUfgIEfiyw" 
+                             alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                
+                <div class="md:w-2/3 md:pl-12 scroll-animate">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-800">
+                        Passionate Developer Crafting Interactive Experiences
+                    </h3>
+                    <p class="text-gray-600 mb-6">
+                         A passionate developer with a knack for crafting dynamic and engaging digital experiences. My journey in technology is fueled by a love for innovative problem-solving and bringing creative visions to life.
+
+With a versatile skill set spanning Java, Python, and JavaScript, I specialize in building robust applications and bringing ideas to life with fluid animations using GSAP. I believe that thoughtful design coupled with seamless interactions is key to captivating users.
+
+When I'm not immersed in code, you might find me exploring new tech trends, contributing to exciting projects, or seeking inspiration in the world around me to recharge my creative batteries.
+                    </p>
+                    <p class="text-gray-600 mb-8">
+                        When I'm not coding, you can find me writing poems or short stories, reading fictional novels, 
+                        or experimenting with new recipes in the kitchen. I believe in continuous learning 
+                        and pushing the boundaries of what's possible with code.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>
+                            <span>Dehradun, India</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-graduation-cap text-blue-500 mr-2"></i>
+                            <span>Computer Science</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-briefcase text-blue-500 mr-2"></i>
+                            <span>Fresher</span>
+                        </div>
+                    
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-blue-500 mr-2"></i>
+                            <span>(+91) 9389962998</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-blue-500 mr-2"></i>
+                            <span>Available for work</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-blue-500 mr-2"></i>
+                            <span>singhmaninder20047@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50 bg-opacity-80 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 scroll-animate">
+                <span class="border-b-4 border-blue-500 pb-2">My Skills</span>
+            </h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Skill cards... (same as before) -->
+                <div class="skill-card bg-white p-6 rounded-xl shadow-md scroll-animate">
+                    <div class="text-blue-500 mb-4">
+                        <i class="fab fa-js text-4xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">JavaScript</h3>
+                    <p class="text-gray-600 text-sm">ES6+, React, Node.js</p>
+                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
+                        <div class="h-2 bg-blue-500 rounded-full" style="width: 90%"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-card bg-white p-6 rounded-xl shadow-md scroll-animate">
+                    <div class="text-green-500 mb-4">
+                        <i class="fab fa-react text-4xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">React</h3>
+                    <p class="text-gray-600 text-sm">Hooks, Context, Redux</p>
+                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
+                        <div class="h-2 bg-green-500 rounded-full" style="width: 85%"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-card bg-white p-6 rounded-xl shadow-md scroll-animate">
+                    <div class="text-yellow-500 mb-4">
+                        <i class="fab fa-node-js text-4xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Locomotive js</h3>
+                    <p class="text-gray-600 text-sm">Smooth scrolling, Parallax effect</p>
+                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
+                        <div class="h-2 bg-yellow-500 rounded-full" style="width: 80%"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-card bg-white p-6 rounded-xl shadow-md scroll-animate">
+                    <div class="text-purple-500 mb-4">
+                        <i class="fas fa-database text-4xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Databases</h3>
+                    <p class="text-gray-600 text-sm">MongoDB, PostgreSQL</p>
+                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
+                        <div class="h-2 bg-purple-500 rounded-full" style="width: 75%"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-card bg-white p-6 rounded-xl shadow-md scroll-animate">
+                    <div class="text-red-500 mb-4">
+                        <i class="fab fa-html5 text-4xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">HTML/CSS</h3>
+                    <p class="text-gray-600 text-sm">Tailwind, Sass</p>
+                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
+                        <div class="h-2 bg-red-500 rounded-full" style="width: 95%"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-card bg-white p-6 rounded-xl shadow-md scroll-animate">
+                    <div class="text-blue-400 mb-4">
+                        <i class="fab fa-git-alt text-4xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Git</h3>
+                    <p class="text-gray-600 text-sm">Version Control</p>
+                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
+                        <div class="h-2 bg-blue-400 rounded-full" style="width: 85%"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-card bg-white p-6 rounded-xl shadow-md scroll-animate">
+                    <div class="text-green-400 mb-4">
+                        <i class="fab fa-python text-4xl"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Python</h3>
+                    <p class="text-gray-600 text-sm">APIs, Libraries & Frameworks</p>
+                    <div class="mt-4 h-2 bg-gray-200 rounded-full">
+                        <div class="h-2 bg-green-400 rounded-full" style="width: 75%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white bg-opacity-80 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 scroll-animate">
+                <span class="border-b-4 border-blue-500 pb-2">My Projects</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project cards... (same as before) -->
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-lg scroll-animate">
+  <!-- Image Container -->
+  <div class="h-48 w-full bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center overflow-hidden">
+    <img src="https://multiverseapp.com/static/0734f916e15b25e59daa629ef415adf3/36489/F.R.I.D.A.Y.webp" 
+         class="w-full h-full object-cover" 
+         alt="FRIDAY Voice Assistant">
+  </div>
+
+  <!-- Content Container -->
+  <div class="p-6">
+    <h3 class="font-bold text-xl mb-2">"Friday": Voice Assistant</h3>
+    <p class="text-gray-700 mb-4">
+      Built a smart, voice-activated assistant using Python, Faster-Whisper, and Speech Recognition APIs.
+      Integrated features like app launching, messaging, music playback, and weather updates.
+    </p>
+
+    <!-- Tech Stack Tags -->
+    <div class="flex flex-wrap gap-2 mb-4">
+      <span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Python</span>
+      <span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">Faster-Whisper</span>
+      <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">Speechrecognition API</span>
+      <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">PyAudio</span>
+      <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">Deepgram API</span>
+      <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">Other Rest APIs</span>
+    </div>
+
+    <!-- Links -->
+    <div class="flex space-x-4">
+      <a href="https://www.linkedin.com/posts/maninder-singh-00a126288_voiceassistant-python-ai-activity-7302393861522239490-3iRf?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXJFooBxB2xK_3LwjQS9-YoFnbxxnStn7w" class="text-blue-500 hover:text-blue-700 flex items-center space-x-1">
+        <i class="fas fa-external-link-alt"></i> <span>Live Demo</span>
+      </a>
+      <a href="https://github.com/EXCALIBUR-cmd/Friday_Voice_Assistant" class="text-gray-500 hover:text-gray-700 flex items-center space-x-1">
+        <i class="fab fa-github"></i> <span>Code</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+                
+                <div class="project-card bg-white rounded-xl overflow-hidden shadow-lg scroll-animate">
+  <!-- Image Container -->
+  <div class="h-48 w-full bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center overflow-hidden">
+    <img src="data:image/jpeg;base64,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" 
+         class="w-full h-full object-cover" 
+         alt="RE Landing Page">
+  </div>
+
+  <!-- Content Container -->
+  <div class="p-6">
+    <h3 class="font-bold text-xl mb-2">Royal Enfield Front-end UI</h3>
+    <p class="text-gray-700 mb-4">
+      Designed an immersive landing page inspired by Obys Agency’s design style.
+
+Used Next.js, GSAP, Framer Motion, and Locomotive Scroll for interactive animations.
+
+Emphasized expressive typography and visual storytelling.
+
+Styled with Tailwind CSS for responsive, high-performance UI.
+    </p>
+
+    <!-- Tech Stack Tags -->
+    <div class="flex flex-wrap gap-2 mb-4">
+      <span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">HTML</span>
+      <span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">Tailwind CSS</span>
+      <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">JavaScript</span>
+            <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">Three js</span>
+        <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">GSAP</span>
+              <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">Locomotive js</span>
+
+    </div>
+
+    <!-- Links -->
+    <div class="flex space-x-4">
+      <a href="https://excalibur-cmd.github.io/Royal_Enfield-Landing-page/" class="text-blue-500 hover:text-blue-700 flex items-center space-x-1">
+        <i class="fas fa-external-link-alt"></i> <span>Live Demo</span>
+      </a>
+      <a href="https://github.com/EXCALIBUR-cmd/Royal_Enfield-Landing-page" class="text-gray-500 hover:text-gray-700 flex items-center space-x-1">
+        <i class="fab fa-github"></i> <span>Code</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+                  <div class="project-card bg-white rounded-xl overflow-hidden shadow-lg scroll-animate">
+  <!-- Image Container -->
+  <div class="h-48 w-full bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center overflow-hidden">
+    <img src="data:image/jpeg;base64,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" 
+         class="w-full h-full object-cover" 
+         alt="Refokus Landing Page">
+  </div>
+
+  <!-- Content Container -->
+  <div class="p-6">
+    <h3 class="font-bold text-xl mb-2">Refokus Front-end UI</h3>
+    <p class="text-gray-700 mb-4">
+      Recreated the 2022 version of the Refokus agency website. Implemented a responsive, high-performance UI using Next.js, GSAP, and Framer Motion.<br><br>
+    Focused on expressive typography and visual storytelling with Tailwind CSS. Utilized Locomotive Scroll for smooth scrolling effects.<br><br>
+    Delivered a visually engaging, code-efficient clone to explore advanced frontend techniques and creative coding practices.
+  </p>
+    </p>
+
+    <!-- Tech Stack Tags -->
+    <div class="flex flex-wrap gap-2 mb-4">
+      <span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">HTML</span>
+      <span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">Tailwind CSS</span>
+      <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">JavaScript</span>
+            <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">React</span>
+        <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">GSAP</span>
+              <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">Locomotive js</span>
+
+    </div>
+
+    <!-- Links -->
+    <div class="flex space-x-4">
+      <a href="https://www.linkedin.com/posts/maninder-singh-00a126288_reactjs-webdevelopment-frontenddev-activity-7323025029246464000-shId?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEXJFooBxB2xK_3LwjQS9-YoFnbxxnStn7w" class="text-blue-500 hover:text-blue-700 flex items-center space-x-1">
+        <i class="fas fa-external-link-alt"></i> <span>Live Demo</span>
+      </a>
+      <a href="https://github.com/EXCALIBUR-cmd/Refokus_Clone" class="text-gray-500 hover:text-gray-700 flex items-center space-x-1">
+        <i class="fab fa-github"></i> <span>Code</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+                
+               
+                
+                
+                
+                
+            
+            <div class="text-center mt-12 scroll-animate">
+                <a href="#" class="inline-block px-8 py-3 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 transition transform hover:scale-105">
+                    View All Projects
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <div class="section-divider"></div>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-50 bg-opacity-80 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 scroll-animate">
+                <span class="border-b-4 border-blue-500 pb-2">Get In Touch</span>
+            </h2>
+            
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10 scroll-animate">
+                    <h3 class="text-2xl font-bold mb-6">Let's Talk About Your Project</h3>
+                    <p class="text-gray-600 mb-8">
+                        I'm currently available for freelance work or full-time positions. If you have a project that you want to get started, think you need my help with something, or just fancy saying hello, then get in touch.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                                <i class="fas fa-map-marker-alt text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Location</h4>
+                                <p class="text-gray-600">Dehradun, India</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-green-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Email</h4>
+                                <p class="text-gray-600">singhmaninder20047@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-4">
+                                <i class="fas fa-phone text-purple-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Phone</h4>
+                                <p class="text-gray-600">(+91) 9389962998</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex space-x-4">
+                        <a href="https://www.linkedin.com/in/maninder-singh-00a126288/" class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center hover:bg-blue-600 transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/EXCALIBUR-cmd" class="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center hover:bg-gray-900 transition">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 scroll-animate">
+                    <form class="bg-white p-8 rounded-xl shadow-md">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg font-medium hover:bg-blue-600 transition transform hover:scale-105">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="text-2xl font-bold text-blue-400">PORTFOLIO</a>
+                    <p class="mt-2 text-gray-400">
+                        © 2025 Maninder. All rights reserved.
+                    </p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row md:space-x-10 space-y-4 md:space-y-0">
+                    <div>
+                        <h4 class="font-bold mb-4">Quick Links</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#home" class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="#about" class="text-gray-400 hover:text-white transition">About</a></li>
+                            <li><a href="#skills" class="text-gray-400 hover:text-white transition">Skills</a></li>
+                            <li><a href="#projects" class="text-gray-400 hover:text-white transition">Projects</a></li>
+                            <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Connect</h4>
+                        <ul class="space-y-2">
+                            <li><a href="https://www.linkedin.com/in/maninder-singh-00a126288/" class="text-gray-400 hover:text-white transition">LinkedIn</a></li>
+                            <li><a href="https://github.com/EXCALIBUR-cmd" class="text-gray-400 hover:text-white transition">GitHub</a></li>
+                           <li><a href="https://www.instagram.com/maninder_31_?igsh=cjk1a3BnNHdjM2lz" class="text-gray-400 hover:text-white transition">Instagram</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold mb-4">Legal</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-6 text-center text-gray-500">
+                <p>
+                    Made with <i class="fas fa-heart text-red-500"></i> by Maninder Singh.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Three.js Animation
+        const threeContainer = document.getElementById('three-container');
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        threeContainer.appendChild(renderer.domElement);
+        
+        // Particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particleCount = 2000;
+        
+        const posArray = new Float32Array(particleCount * 3);
+        for(let i = 0; i < particleCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 10;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.02,
+            color: 0x3b82f6,
+            transparent: true,
+            opacity: 0.8
+        });
+        
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        
+        camera.position.z = 3;
+        
+        // Animation variables
+        let scrollY = window.scrollY;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+        let currentRotationX = 0;
+        let currentRotationY = 0;
+        
+        // Mouse movement variables
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        // Handle mouse movement
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+        
+        // Handle scroll
+        window.addEventListener('scroll', () => {
+            scrollY = window.scrollY;
+            
+            // Calculate target rotation based on scroll position
+            const scrollPercent = scrollY / (document.body.scrollHeight - window.innerHeight);
+            targetRotationY = scrollPercent * Math.PI * 2;
+            targetRotationX = scrollPercent * Math.PI;
+        });
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Smoothly interpolate towards target rotation
+            currentRotationX += (targetRotationX - currentRotationX) * 0.05;
+            currentRotationY += (targetRotationY - currentRotationY) * 0.05;
+            
+            // Apply rotation with mouse influence
+            particlesMesh.rotation.x = currentRotationX + mouseY * 0.2;
+            particlesMesh.rotation.y = currentRotationY + mouseX * 0.2;
+            
+            // Move particles based on scroll
+            const positions = particlesGeometry.attributes.position.array;
+            for(let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                
+                // Create wave-like movement
+                positions[i3 + 1] += Math.sin(scrollY * 0.001 + i * 0.1) * 0.01;
+                positions[i3 + 0] += Math.cos(scrollY * 0.001 + i * 0.1) * 0.01;
+                
+                // Reset particles that move too far
+                if(positions[i3 + 0] > 5 || positions[i3 + 0] < -5) {
+                    positions[i3 + 0] = (Math.random() - 0.5) * 10;
+                }
+                if(positions[i3 + 1] > 5 || positions[i3 + 1] < -5) {
+                    positions[i3 + 1] = (Math.random() - 0.5) * 10;
+                }
+                if(positions[i3 + 2] > 5 || positions[i3 + 2] < -5) {
+                    positions[i3 + 2] = (Math.random() - 0.5) * 10;
+                }
+            }
+            particlesGeometry.attributes.position.needsUpdate = true;
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        // Start animation
+        animate();
+        
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        // Add active class to cursor when hovering over clickable elements
+        const clickableElements = document.querySelectorAll('a, button, .project-card, .skill-card, input, textarea');
+        clickableElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+            });
+        });
+        
+        // Scroll animation
+        const scrollElements = document.querySelectorAll('.scroll-animate');
+        const elementInView = (el, dividend = 1) => {
+            const elementTop = el.getBoundingClientRect().top;
+            return (
+                elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+            );
+        };
+        
+        const displayScrollElement = (element) => {
+            element.classList.add('active');
+        };
+        
+        const hideScrollElement = (element) => {
+            element.classList.remove('active');
+        };
+        
+        const handleScrollAnimation = () => {
+            scrollElements.forEach((el) => {
+                if (elementInView(el, 1.25)) {
+                    displayScrollElement(el);
+                } else {
+                    hideScrollElement(el);
+                }
+            });
+        };
+        
+        // Initialize scroll animation
+        window.addEventListener('scroll', () => {
+            handleScrollAnimation();
+        });
+        
+        // Trigger animations on page load for elements already in view
+        document.addEventListener('DOMContentLoaded', () => {
+            scrollElements.forEach((el) => {
+                if (elementInView(el, 1.25)) {
+                    displayScrollElement(el);
+                }
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('button.md\\:hidden');
+        const mobileMenu = document.createElement('div');
+        mobileMenu.className = 'fixed inset-0 bg-white z-40 flex flex-col items-center justify-center hidden';
+        mobileMenu.innerHTML = `
+            <button class="absolute top-4 right-4 text-2xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="flex flex-col space-y-8 text-center">
+                <a href="#home" class="text-2xl hover:text-blue-500 transition">Home</a>
+                <a href="#about" class="text-2xl hover:text-blue-500 transition">About</a>
+                <a href="#skills" class="text-2xl hover:text-blue-500 transition">Skills</a>
+                <a href="#projects" class="text-2xl hover:text-blue-500 transition">Projects</a>
+                <a href="#contact" class="text-2xl hover:text-blue-500 transition">Contact</a>
+            </div>
+        `;
+        document.body.appendChild(mobileMenu);
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        mobileMenu.querySelector('button').addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        // Close mobile menu when clicking on a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
+</body>
+</html>
